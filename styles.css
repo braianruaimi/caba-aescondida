@@ -344,6 +344,131 @@ section {
     font-weight: 600;
 }
 
+/* La Escondida de Noche */
+.night-section {
+    position: relative;
+    padding: 6rem 0;
+    overflow: hidden;
+    background: linear-gradient(135deg, #0a1128 0%, #1a2332 50%, #0f1b2e 100%);
+}
+
+.night-background {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: url('https://images.unsplash.com/photo-1519681393784-d120267933ba?w=1920');
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    opacity: 0.3;
+    z-index: 0;
+}
+
+.night-background::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(circle at 50% 50%, transparent 0%, rgba(10, 17, 40, 0.6) 100%);
+}
+
+.night-section .container {
+    position: relative;
+    z-index: 1;
+}
+
+.night-content {
+    max-width: 900px;
+    margin: 0 auto;
+    text-align: center;
+}
+
+.night-title {
+    font-size: 3rem;
+    color: #fff;
+    margin-bottom: 3rem;
+    text-shadow: 0 2px 20px rgba(0, 0, 0, 0.8);
+    letter-spacing: 1px;
+    position: relative;
+    display: inline-block;
+}
+
+.night-title::after {
+    content: '';
+    position: absolute;
+    bottom: -15px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 100px;
+    height: 3px;
+    background: linear-gradient(90deg, transparent, #97bf0d, transparent);
+    box-shadow: 0 0 10px #97bf0d;
+}
+
+.night-text {
+    background: rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 20px;
+    padding: 3rem 2.5rem;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+}
+
+.night-intro,
+.night-description {
+    color: rgba(255, 255, 255, 0.95);
+    font-size: 1.15rem;
+    line-height: 2;
+    margin-bottom: 2rem;
+    text-align: left;
+    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.5);
+}
+
+.night-intro {
+    font-size: 1.2rem;
+}
+
+.night-quote {
+    position: relative;
+    background: linear-gradient(135deg, rgba(151, 191, 13, 0.1), rgba(44, 95, 45, 0.1));
+    border-left: 4px solid #97bf0d;
+    padding: 2.5rem 3rem;
+    margin: 3rem 0 0 0;
+    border-radius: 15px;
+    box-shadow: 0 4px 20px rgba(151, 191, 13, 0.2);
+}
+
+.night-quote p {
+    color: #fff;
+    font-size: 1.25rem;
+    line-height: 2;
+    font-style: italic;
+    font-weight: 500;
+    margin: 1.5rem 0;
+    text-align: center;
+    text-shadow: 0 2px 8px rgba(0, 0, 0, 0.5);
+}
+
+.night-quote i {
+    color: #97bf0d;
+    font-size: 2rem;
+    opacity: 0.6;
+}
+
+.night-quote .fa-quote-left {
+    float: left;
+    margin-right: 15px;
+}
+
+.night-quote .fa-quote-right {
+    float: right;
+    margin-left: 15px;
+}
+
 /* Servicios */
 .services {
     background-color: var(--light-color);
@@ -782,6 +907,37 @@ section {
         grid-template-columns: 1fr;
     }
 
+    .night-section {
+        padding: 4rem 0;
+    }
+
+    .night-title {
+        font-size: 2rem;
+    }
+
+    .night-text {
+        padding: 2rem 1.5rem;
+    }
+
+    .night-intro,
+    .night-description {
+        font-size: 1rem;
+        line-height: 1.8;
+    }
+
+    .night-quote {
+        padding: 2rem 1.5rem;
+    }
+
+    .night-quote p {
+        font-size: 1.1rem;
+        line-height: 1.8;
+    }
+
+    .night-quote i {
+        font-size: 1.5rem;
+    }
+
     .form-row {
         grid-template-columns: 1fr;
     }
@@ -816,6 +972,27 @@ section {
 
     .section-header h2 {
         font-size: 1.5rem;
+    }
+
+    .night-title {
+        font-size: 1.5rem;
+    }
+
+    .night-text {
+        padding: 1.5rem 1rem;
+    }
+
+    .night-intro,
+    .night-description {
+        font-size: 0.95rem;
+    }
+
+    .night-quote {
+        padding: 1.5rem 1rem;
+    }
+
+    .night-quote p {
+        font-size: 1rem;
     }
 
     .services-grid,
