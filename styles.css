@@ -256,19 +256,33 @@ section {
 .features {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
-    gap: 1rem;
+    gap: 1.2rem;
     margin-top: 2rem;
 }
 
 .feature {
     display: flex;
     align-items: center;
-    gap: 10px;
+    gap: 12px;
+    padding: 0.8rem;
+    background: rgba(44, 95, 45, 0.05);
+    border-radius: 8px;
+    transition: all 0.3s ease;
+}
+
+.feature:hover {
+    background: rgba(44, 95, 45, 0.1);
+    transform: translateX(5px);
 }
 
 .feature i {
     color: var(--primary-color);
-    font-size: 1.2rem;
+    font-size: 1.3rem;
+    flex-shrink: 0;
+}
+
+.feature span {
+    font-weight: 500;
 }
 
 .about-image img {
