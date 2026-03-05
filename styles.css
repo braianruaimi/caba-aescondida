@@ -160,6 +160,7 @@ body {
     font-size: 1.5rem;
     margin-bottom: 2rem;
     text-shadow: 1px 1px 5px rgba(0, 0, 0, 0.5);
+    line-height: 1.8;
 }
 
 /* Botones */
@@ -229,9 +230,21 @@ section {
 }
 
 .about-text h3 {
-    font-size: 2rem;
+    font-size: 1.8rem;
     color: var(--primary-color);
-    margin-bottom: 1.5rem;
+    margin-bottom: 1rem;
+    margin-top: 2rem;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.about-text h3:first-of-type {
+    margin-top: 0;
+}
+
+.about-text h3 i {
+    font-size: 1.5rem;
 }
 
 .about-text p {
