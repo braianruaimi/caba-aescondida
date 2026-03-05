@@ -147,7 +147,7 @@ bookingForm.addEventListener('submit', (e) => {
                    `_Consulta enviada desde la web de La Escondida_`;
     
     // Reemplaza con tu número de WhatsApp (sin +, sin espacios, sin guiones)
-    const numeroWhatsApp = '5491112345678';
+    const numeroWhatsApp = '5492215047962';
     
     // Abrir WhatsApp
     window.open(`https://wa.me/${numeroWhatsApp}?text=${mensaje}`, '_blank');

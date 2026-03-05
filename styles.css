@@ -847,6 +847,49 @@ section {
     font-size: 1.1rem;
 }
 
+.final-message {
+    text-align: center;
+    margin-top: 4rem;
+    padding: 3rem 2rem;
+    background: linear-gradient(135deg, rgba(44, 95, 45, 0.05), rgba(151, 191, 13, 0.05));
+    border-radius: 20px;
+    border: 2px solid rgba(44, 95, 45, 0.1);
+}
+
+.final-message p {
+    font-size: 1.5rem;
+    color: var(--primary-color);
+    font-weight: 500;
+    font-style: italic;
+    margin-bottom: 1.5rem;
+    line-height: 1.6;
+}
+
+.decorative-icons {
+    display: flex;
+    justify-content: center;
+    gap: 2rem;
+    font-size: 2.5rem;
+    margin-top: 1rem;
+}
+
+.decorative-icons span {
+    animation: float 3s ease-in-out infinite;
+}
+
+.decorative-icons span:nth-child(2) {
+    animation-delay: 0.5s;
+}
+
+@keyframes float {
+    0%, 100% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(-10px);
+    }
+}
+
 /* Footer */
 .footer {
     background-color: var(--dark-color);
@@ -912,6 +955,31 @@ section {
 .social-links a:hover {
     background: var(--secondary-color);
     transform: translateY(-3px);
+}
+
+.footer-whatsapp-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    background: linear-gradient(135deg, #25D366, #128C7E);
+    color: var(--white);
+    padding: 0.8rem 2rem;
+    border-radius: 50px;
+    text-decoration: none;
+    font-weight: 600;
+    margin: 1.5rem 0;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(37, 211, 102, 0.3);
+}
+
+.footer-whatsapp-btn:hover {
+    background: linear-gradient(135deg, #128C7E, #075E54);
+    transform: translateY(-3px);
+    box-shadow: 0 6px 20px rgba(37, 211, 102, 0.5);
+}
+
+.footer-whatsapp-btn i {
+    font-size: 1.3rem;
 }
 
 .footer-bottom {
