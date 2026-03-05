@@ -94,13 +94,12 @@ bookingForm.addEventListener('submit', (e) => {
     
     // Obtener valores del formulario
     const formData = {
-        nombre: document.getElementById('nombre').value,
-        email: document.getElementById('email').value,
-        telefono: document.getElementById('telefono').value,
-        personas: document.getElementById('personas').value,
+        nombre: document.getElementById('nombre').value.trim(),
+        email: document.getElementById('email').value.trim(),
+        telefono: document.getElementById('telefono').value.trim(),
         checkin: document.getElementById('checkin').value,
         checkout: document.getElementById('checkout').value,
-        mensaje: document.getElementById('mensaje').value
+        mensaje: document.getElementById('mensaje').value.trim()
     };
     
     // Validar fechas
@@ -110,12 +109,12 @@ bookingForm.addEventListener('submit', (e) => {
     today.setHours(0, 0, 0, 0);
     
     if (checkinDate < today) {
-        alert('La fecha de entrada no puede ser anterior a hoy');
+        alert('La fecha de check-in no puede ser anterior a hoy');
         return;
     }
     
     if (checkoutDate <= checkinDate) {
-        alert('La fecha de salida debe ser posterior a la fecha de entrada');
+        alert('La fecha de check-out debe ser posterior a la fecha de check-in');
         return;
     }
     
@@ -127,33 +126,39 @@ bookingForm.addEventListener('submit', (e) => {
         return;
     }
     
-    // Aquí puedes integrar con tu sistema de reservas
-    // Por ahora mostramos un mensaje de confirmación
+    // Formatear fechas para mostrar
+    const formatDate = (dateStr) => {
+        const date = new Date(dateStr);
+        const day = String(date.getDate() + 1).padStart(2, '0');
+        const month = String(date.getMonth() + 1).padStart(2, '0');
+        const year = date.getFullYear();
+        return `${day}/${month}/${year}`;
+    };
     
-    // Crear mensaje de WhatsApp
-    const mensaje = `¡Hola! Quiero hacer una consulta de reserva:%0A%0A` +
-                   `Nombre: ${formData.nombre}%0A` +
-                   `Email: ${formData.email}%0A` +
-                   `Teléfono: ${formData.telefono}%0A` +
-                   `Personas: ${formData.personas}%0A` +
-                   `Check-in: ${formData.checkin}%0A` +
-                   `Check-out: ${formData.checkout}%0A` +
-                   `Noches: ${nights}%0A` +
-                   `Mensaje: ${formData.mensaje || 'Sin mensaje adicional'}`;
+    // Crear mensaje para WhatsApp
+    const mensaje = `🏡 *CONSULTA DE RESERVA - LA ESCONDIDA*%0A%0A` +
+                   `👤 *Nombre:* ${formData.nombre}%0A` +
+                   `📧 *Email:* ${formData.email}%0A` +
+                   `📱 *Teléfono:* ${formData.telefono}%0A%0A` +
+                   `📅 *Check-in:* ${formatDate(formData.checkin)}%0A` +
+                   `📅 *Check-out:* ${formatDate(formData.checkout)}%0A` +
+                   `🌙 *Noches:* ${nights}%0A%0A` +
+                   `${formData.mensaje ? `💬 *Mensaje:*%0A${encodeURIComponent(formData.mensaje)}%0A%0A` : ''}` +
+                   `_Consulta enviada desde la web de La Escondida_`;
     
     // Reemplaza con tu número de WhatsApp (sin +, sin espacios, sin guiones)
     const numeroWhatsApp = '5491112345678';
     
-    // Preguntar si quiere enviar por WhatsApp
-    if (confirm(`Tu consulta está lista. ¿Deseas enviarla por WhatsApp?\n\nEstadía: ${nights} noche(s)`)) {
-        window.open(`https://wa.me/${numeroWhatsApp}?text=${mensaje}`, '_blank');
-    }
-    
-    // Limpiar formulario
-    bookingForm.reset();
+    // Abrir WhatsApp
+    window.open(`https://wa.me/${numeroWhatsApp}?text=${mensaje}`, '_blank');
     
     // Mostrar mensaje de éxito
-    showNotification('¡Consulta enviada! Te contactaremos pronto.', 'success');
+    showNotification('¡Consulta enviada! Te redirigimos a WhatsApp...', 'success');
+    
+    // Limpiar formulario después de 2 segundos
+    setTimeout(() => {
+        bookingForm.reset();
+    }, 2000);
 });
 
 // Validación de fecha en tiempo real

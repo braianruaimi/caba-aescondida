@@ -229,68 +229,73 @@
     <section class="booking" id="reservas">
         <div class="container">
             <div class="section-header light">
-                <h2>Hacer una Reserva</h2>
-                <p>Un refugio exclusivo para parejas. Completa el formulario y te contactaremos a la brevedad</p>
+                <h2>Reserva tu Escapada</h2>
+                <p>Contáctanos para asegurar tu refugio perfecto</p>
             </div>
             <div class="booking-content">
                 <form class="booking-form" id="bookingForm">
+                    <div class="form-group">
+                        <label for="nombre">Nombre *</label>
+                        <input type="text" id="nombre" name="nombre" placeholder="Tu nombre completo" required>
+                    </div>
                     <div class="form-row">
                         <div class="form-group">
-                            <label for="nombre">Nombre completo</label>
-                            <input type="text" id="nombre" name="nombre" required>
+                            <label for="email">Email *</label>
+                            <input type="email" id="email" name="email" placeholder="tu@email.com" required>
                         </div>
                         <div class="form-group">
-                            <label for="email">Email</label>
-                            <input type="email" id="email" name="email" required>
+                            <label for="telefono">Teléfono *</label>
+                            <input type="tel" id="telefono" name="telefono" placeholder="+1234567890 o (123) 456-7890" required>
                         </div>
                     </div>
                     <div class="form-row">
                         <div class="form-group">
-                            <label for="telefono">Teléfono</label>
-                            <input type="tel" id="telefono" name="telefono" required>
+                            <label for="checkin">Check-in *</label>
+                            <input type="date" id="checkin" name="checkin" placeholder="dd/mm/aaaa" required>
                         </div>
                         <div class="form-group">
-                            <label for="personas">Número de personas</label>
-                            <select id="personas" name="personas" required>
-                                <option value="">Seleccionar...</option>
-                                <option value="2" selected>2 personas (pareja)</option>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label for="checkin">Fecha de entrada</label>
-                            <input type="date" id="checkin" name="checkin" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="checkout">Fecha de salida</label>
-                            <input type="date" id="checkout" name="checkout" required>
+                            <label for="checkout">Check-out *</label>
+                            <input type="date" id="checkout" name="checkout" placeholder="dd/mm/aaaa" required>
                         </div>
                     </div>
                     <div class="form-group">
-                        <label for="mensaje">Mensaje (opcional)</label>
-                        <textarea id="mensaje" name="mensaje" rows="4"></textarea>
+                        <label for="mensaje">Mensaje</label>
+                        <textarea id="mensaje" name="mensaje" rows="4" placeholder="Cuéntanos sobre tu estadía ideal..."></textarea>
                     </div>
-                    <button type="submit" class="btn btn-primary">Enviar Consulta</button>
+                    <div class="form-buttons">
+                        <button type="submit" class="btn btn-primary">
+                            <i class="fab fa-whatsapp"></i> Enviar Consulta
+                        </button>
+                        <a href="https://wa.me/5491112345678" target="_blank" class="btn btn-whatsapp">
+                            <i class="fab fa-whatsapp"></i> Chatea con Nosotros
+                            <small>Respuesta inmediata por WhatsApp</small>
+                        </a>
+                    </div>
                 </form>
                 <div class="booking-info">
                     <div class="pricing-card">
-                        <h3>Tarifas</h3>
-                        <div class="price-item">
-                            <span>Lunes a Jueves</span>
-                            <strong>$8,000 / noche</strong>
+                        <div class="whatsapp-direct">
+                            <i class="fab fa-whatsapp" style="font-size: 4rem; color: #25D366; margin-bottom: 1rem;"></i>
+                            <h3>Contacto Directo</h3>
+                            <p style="margin: 1.5rem 0;">Preferís hablar directamente? Escríbenos por WhatsApp y te respondemos al instante.</p>
+                            <a href="https://wa.me/5491112345678" target="_blank" class="btn-wa-large">
+                                <i class="fab fa-whatsapp"></i> Abrir WhatsApp
+                            </a>
                         </div>
-                        <div class="price-item">
-                            <span>Viernes a Domingo</span>
-                            <strong>$12,000 / noche</strong>
+                        <hr style="margin: 2rem 0;">
+                        <h3>Información</h3>
+                        <div class="info-item">
+                            <i class="fas fa-moon"></i>
+                            <span>Estadía mínima: 2 noches</span>
                         </div>
-                        <div class="price-item">
-                            <span>Fin de semana largo</span>
-                            <strong>$15,000 / noche</strong>
+                        <div class="info-item">
+                            <i class="fas fa-heart"></i>
+                            <span>Exclusivo para parejas</span>
                         </div>
-                        <hr>
-                        <p class="note">* Precios en pesos argentinos</p>
-                        <p class="note">* Estadía mínima: 2 noches</p>
+                        <div class="info-item">
+                            <i class="fas fa-check-circle"></i>
+                            <span>Respuesta en menos de 24hs</span>
+                        </div>
                     </div>
                 </div>
             </div>
