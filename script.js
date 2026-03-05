@@ -3,15 +3,45 @@ const navToggle = document.getElementById('navToggle');
 const navMenu = document.getElementById('navMenu');
 const navLinks = document.querySelectorAll('.nav-link');
 
-navToggle.addEventListener('click', () => {
+navToggle.addEventListener('click', (e) => {
+    e.stopPropagation();
     navMenu.classList.toggle('active');
+    navToggle.classList.toggle('active');
+    document.body.classList.toggle('menu-open');
 });
 
 // Cerrar menú al hacer click en un link
 navLinks.forEach(link => {
     link.addEventListener('click', () => {
         navMenu.classList.remove('active');
+        navToggle.classList.remove('active');
+        document.body.classList.remove('menu-open');
     });
+});
+
+// Cerrar menú al hacer click fuera
+document.addEventListener('click', (e) => {
+    if (navMenu.classList.contains('active') && 
+        !navMenu.contains(e.target) && 
+        !navToggle.contains(e.target)) {
+        navMenu.classList.remove('active');
+        navToggle.classList.remove('active');
+        document.body.classList.remove('menu-open');
+    }
+});
+
+// Cerrar menú al hacer scroll
+let lastScrollTop = 0;
+window.addEventListener('scroll', () => {
+    if (navMenu.classList.contains('active')) {
+        const currentScroll = window.pageYOffset;
+        if (Math.abs(currentScroll - lastScrollTop) > 50) {
+            navMenu.classList.remove('active');
+            navToggle.classList.remove('active');
+            document.body.classList.remove('menu-open');
+        }
+        lastScrollTop = currentScroll;
+    }
 });
 
 // Navbar scroll effect

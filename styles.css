@@ -1039,30 +1039,96 @@ section {
     .nav-menu {
         position: fixed;
         left: -100%;
-        top: 70px;
+        top: 0;
         flex-direction: column;
         background-color: var(--white);
-        width: 100%;
-        text-align: center;
-        transition: 0.3s;
+        width: 85%;
+        max-width: 320px;
+        height: 100vh;
+        text-align: left;
+        transition: left 0.3s ease;
         box-shadow: var(--shadow-lg);
-        padding: 2rem 0;
+        padding: 5rem 2rem 2rem;
+        overflow-y: auto;
+        z-index: 1001;
     }
 
     .nav-menu.active {
         left: 0;
     }
 
+    .nav-menu::before {
+        content: '';
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 70px;
+        background: var(--white);
+        z-index: -1;
+    }
+
     .nav-toggle {
         display: flex;
+        z-index: 1002;
+    }
+
+    .nav-toggle.active span:nth-child(1) {
+        transform: rotate(45deg) translate(8px, 8px);
+    }
+
+    .nav-toggle.active span:nth-child(2) {
+        opacity: 0;
+    }
+
+    .nav-toggle.active span:nth-child(3) {
+        transform: rotate(-45deg) translate(7px, -7px);
+    }
+
+    /* Overlay para cerrar menú */
+    body.menu-open::after {
+        content: '';
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.5);
+        z-index: 999;
+    }
+
+    body.menu-open {
+        overflow: hidden;
+    }
+
+    .nav-link {
+        padding: 1rem 0;
+        font-size: 1.1rem;
+        border-bottom: 1px solid #eee;
+    }
+
+    .nav-link.btn-reserva {
+        margin-top: 1rem;
+        text-align: center;
+        padding: 1rem 1.5rem;
     }
 
     .hero-title {
-        font-size: 2rem;
+        font-size: 1.8rem;
+        line-height: 1.3;
+        padding: 0 1rem;
     }
 
     .hero-subtitle {
-        font-size: 1.2rem;
+        font-size: 1rem;
+        line-height: 1.6;
+        padding: 0 1rem;
+        margin-bottom: 1.5rem;
+    }
+
+    .btn {
+        padding: 0.9rem 2rem;
+        font-size: 1rem;
     }
 
     .about-content,
@@ -1080,34 +1146,51 @@ section {
     }
 
     .night-section {
-        padding: 4rem 0;
+        padding: 3rem 0;
+        background-attachment: scroll;
+    }
+
+    .night-background {
+        background-attachment: scroll;
+        opacity: 0.4;
     }
 
     .night-title {
-        font-size: 2rem;
+        font-size: 1.8rem;
+        line-height: 1.3;
+        margin-bottom: 2rem;
+    }
+
+    .night-title::after {
+        width: 60px;
     }
 
     .night-text {
         padding: 2rem 1.5rem;
+        border-radius: 15px;
     }
 
     .night-intro,
     .night-description {
         font-size: 1rem;
         line-height: 1.8;
+        margin-bottom: 1.5rem;
     }
 
     .night-quote {
-        padding: 2rem 1.5rem;
+        padding: 1.5rem 1.2rem;
+        border-radius: 12px;
+        margin-top: 2rem;
     }
 
     .night-quote p {
-        font-size: 1.1rem;
-        line-height: 1.8;
+        font-size: 1.05rem;
+        line-height: 1.7;
+        margin: 1rem 0;
     }
 
     .night-quote i {
-        font-size: 1.5rem;
+        font-size: 1.3rem;
     }
 
     .form-row {
@@ -1132,7 +1215,13 @@ section {
     }
 
     .section-header h2 {
-        font-size: 2rem;
+        font-size: 1.8rem;
+        line-height: 1.3;
+    }
+
+    .section-header p {
+        font-size: 1rem;
+        padding: 0 1rem;
     }
 
     .footer-content {
