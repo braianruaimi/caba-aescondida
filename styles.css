@@ -1022,6 +1022,79 @@ section {
     }
 }
 
+/* Medios de Pago */
+.payment-methods {
+    margin-top: 3rem;
+    padding: 2.5rem;
+    background: linear-gradient(135deg, rgba(244, 162, 97, 0.05), rgba(233, 196, 106, 0.05));
+    border-radius: 20px;
+    text-align: center;
+}
+
+.payment-methods h3 {
+    color: var(--white);
+    font-size: 1.8rem;
+    margin-bottom: 2rem;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.payment-icons {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 2rem;
+    flex-wrap: wrap;
+}
+
+.payment-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.8rem;
+    transition: transform 0.3s ease;
+}
+
+.payment-item:hover {
+    transform: translateY(-8px);
+}
+
+.payment-icon {
+    width: 80px;
+    height: 80px;
+    background: var(--white);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.15);
+    transition: all 0.3s ease;
+}
+
+.payment-icon:hover {
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.25);
+    transform: scale(1.1);
+}
+
+.payment-icon i {
+    font-size: 2.5rem;
+    color: var(--primary-color);
+}
+
+.payment-icon.credit i {
+    color: #e74c3c;
+}
+
+.payment-icon.crypto i {
+    color: #f39c12;
+}
+
+.payment-item span {
+    color: var(--white);
+    font-weight: 600;
+    font-size: 1rem;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
+}
+
 /* Footer */
 .footer {
     background-color: var(--dark-color);
@@ -1793,6 +1866,20 @@ section {
         justify-content: center;
     }
 
+    /* Medios de pago responsive */
+    .payment-icons {
+        gap: 1.5rem;
+    }
+
+    .payment-icon {
+        width: 70px;
+        height: 70px;
+    }
+
+    .payment-icon i {
+        font-size: 2rem;
+    }
+
     /* Chatbot responsive */
     .chatbot-container {
         width: 100%;
@@ -1877,6 +1964,32 @@ section {
     .services-grid,
     .contact-grid {
         grid-template-columns: 1fr;
+    }
+
+    /* Medios de pago móvil */
+    .payment-methods {
+        padding: 1.5rem 1rem;
+    }
+
+    .payment-methods h3 {
+        font-size: 1.4rem;
+    }
+
+    .payment-icons {
+        gap: 1rem;
+    }
+
+    .payment-icon {
+        width: 60px;
+        height: 60px;
+    }
+
+    .payment-icon i {
+        font-size: 1.8rem;
+    }
+
+    .payment-item span {
+        font-size: 0.9rem;
     }
 
     .carousel-track-container {
