@@ -428,10 +428,15 @@
         }
 
         function clearData() {
-            if (confirm('¿Está seguro de que desea eliminar todos los datos de analytics?')) {
-                localStorage.removeItem('cabana_analytics');
-                loadAnalytics();
-                alert('Datos eliminados correctamente');
+            const password = prompt('Ingrese la contraseña para limpiar los datos:');
+            if (password === '12345') {
+                if (confirm('¿Está seguro de que desea eliminar todos los datos de analytics?')) {
+                    localStorage.removeItem('cabana_analytics');
+                    loadAnalytics();
+                    alert('Datos eliminados correctamente');
+                }
+            } else if (password !== null) {
+                alert('Contraseña incorrecta');
             }
         }
 
