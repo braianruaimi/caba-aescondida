@@ -2,7 +2,7 @@
   "name": "La Escondida - Cabaña en Arana",
   "short_name": "La Escondida",
   "description": "Cabaña exclusiva para parejas en Arana. Un refugio escondido en la naturaleza.",
-  "start_url": "/caba-aescondida/",
+  "start_url": "/",
   "display": "standalone",
   "background_color": "#f4a261",
   "theme_color": "#f4a261",
