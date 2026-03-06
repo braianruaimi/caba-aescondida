@@ -848,3 +848,71 @@ function handleSwipe() {
         resetAutoPlay();
     }
 }
+
+// ===========================
+// PWA Installation
+// ===========================
+
+let deferredPrompt;
+const installButton = document.getElementById('installAppButton');
+
+// Registrar Service Worker
+if ('serviceWorker' in navigator) {
+    window.addEventListener('load', () => {
+        navigator.serviceWorker.register('/caba-aescondida/sw.js')
+            .then(registration => {
+                console.log('Service Worker registrado:', registration);
+            })
+            .catch(error => {
+                console.log('Error al registrar Service Worker:', error);
+            });
+    });
+}
+
+// Capturar el evento beforeinstallprompt
+window.addEventListener('beforeinstallprompt', (e) => {
+    // Prevenir que el navegador muestre su propio mensaje
+    e.preventDefault();
+    // Guardar el evento para usarlo después
+    deferredPrompt = e;
+    // Mostrar el botón de instalación
+    if (installButton) {
+        installButton.style.display = 'flex';
+    }
+});
+
+// Manejar el clic en el botón de instalación
+if (installButton) {
+    installButton.addEventListener('click', async () => {
+        if (!deferredPrompt) {
+            return;
+        }
+        
+        // Mostrar el prompt de instalación
+        deferredPrompt.prompt();
+        
+        // Esperar la respuesta del usuario
+        const { outcome } = await deferredPrompt.userChoice;
+        
+        if (outcome === 'accepted') {
+            console.log('Usuario aceptó la instalación');
+        } else {
+            console.log('Usuario rechazó la instalación');
+        }
+        
+        // Limpiar el prompt
+        deferredPrompt = null;
+        
+        // Ocultar el botón después de intentar instalar
+        installButton.style.display = 'none';
+    });
+}
+
+// Detectar cuando la app ya está instalada
+window.addEventListener('appinstalled', () => {
+    console.log('La aplicación fue instalada');
+    if (installButton) {
+        installButton.style.display = 'none';
+    }
+    deferredPrompt = null;
+});

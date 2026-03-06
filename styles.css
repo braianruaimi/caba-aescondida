@@ -1292,6 +1292,43 @@ section {
     box-shadow: 0 6px 20px rgba(102, 126, 234, 0.6);
 }
 
+/* Install App Button */
+.install-app-button {
+    position: fixed;
+    bottom: 170px;
+    right: 30px;
+    width: 60px;
+    height: 60px;
+    background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);
+    color: var(--white);
+    border: none;
+    border-radius: 50%;
+    cursor: pointer;
+    box-shadow: 0 4px 15px rgba(17, 153, 142, 0.4);
+    transition: all 0.3s ease;
+    z-index: 998;
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 2px;
+}
+
+.install-app-button i {
+    font-size: 1.5rem;
+}
+
+.install-app-button span {
+    font-size: 0.65rem;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+}
+
+.install-app-button:hover {
+    transform: scale(1.1) translateY(-2px);
+    box-shadow: 0 6px 20px rgba(17, 153, 142, 0.6);
+}
+
 /* Chatbot Container */
 .chatbot-container {
     position: fixed;
