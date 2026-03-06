@@ -1,13 +1,13 @@
 // Service Worker para La Escondida
-const CACHE_NAME = 'la-escondida-v1';
+const CACHE_NAME = 'la-escondida-v2';
 const urlsToCache = [
-  '/caba-aescondida/',
-  '/caba-aescondida/index.html',
-  '/caba-aescondida/styles.css',
-  '/caba-aescondida/script.js',
-  '/caba-aescondida/Image/1.jpeg',
-  '/caba-aescondida/Image/2.jpeg',
-  '/caba-aescondida/Image/3.jpeg'
+  '/',
+  '/index.html',
+  '/styles.css',
+  '/script.js',
+  '/Image/1.jpeg',
+  '/Image/2.jpeg',
+  '/Image/3.jpeg'
 ];
 
 // Instalación del Service Worker
