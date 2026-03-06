@@ -151,8 +151,8 @@ bookingForm.addEventListener('submit', (e) => {
     // Calcular noches
     const nights = Math.ceil((checkoutDate - checkinDate) / (1000 * 60 * 60 * 24));
     
-    if (nights < 2) {
-        alert('La estadía mínima es de 2 noches');
+    if (nights < 1) {
+        alert('La estadía mínima es de 1 noche');
         return;
     }
     
@@ -202,7 +202,7 @@ checkinInput.setAttribute('min', today);
 checkinInput.addEventListener('change', () => {
     const checkinDate = new Date(checkinInput.value);
     const minCheckout = new Date(checkinDate);
-    minCheckout.setDate(minCheckout.getDate() + 2);
+    minCheckout.setDate(minCheckout.getDate() + 1);
     checkoutInput.setAttribute('min', minCheckout.toISOString().split('T')[0]);
     
     if (checkoutInput.value) {
@@ -536,4 +536,167 @@ setInterval(() => {
 
 window.addEventListener('beforeunload', () => {
     trackEvent('time_on_page', { seconds: timeOnPage });
+});
+
+// ==================== CHATBOT IA ====================
+const aiChatButton = document.getElementById('aiChatButton');
+const chatbotContainer = document.getElementById('chatbotContainer');
+const chatbotClose = document.getElementById('chatbotClose');
+const chatbotMessages = document.getElementById('chatbotMessages');
+const chatbotInput = document.getElementById('chatbotInput');
+const chatbotSend = document.getElementById('chatbotSend');
+
+// Base de conocimiento del chatbot
+const chatbotKnowledge = {
+    'ubicacion|donde|lugar|ubicada': {
+        response: '🗺️ La Escondida está ubicada en una isla en Arana, La Plata. Es un lugar verdaderamente escondido, a aproximadamente 1 hora en auto desde la ciudad. Es súper seguro y aislado de todo.',
+        keywords: ['ubicacion', 'donde', 'lugar', 'arana', 'ubicada', 'está']
+    },
+    'precio|costo|tarifa|cuanto': {
+        response: '💰 Para consultar precios y disponibilidad, te recomiendo contactarnos directamente por WhatsApp haciendo clic en el botón "Reservar Ahora" o escribiéndonos al 221 5047962.',
+        keywords: ['precio', 'costo', 'tarifa', 'cuanto', 'vale']
+    },
+    'horario|check-in|check-out|entrada|salida': {
+        response: '⏰ Check-in: 10:00 AM | Check-out: 11:00 AM. Puedes entrar y salir de la cabaña libremente durante tu estadía.',
+        keywords: ['horario', 'check-in', 'check-out', 'entrada', 'salida', 'hora']
+    },
+    'servicios|amenities|incluye|cuenta|tiene': {
+        response: '🏡 La cabaña cuenta con todo lo necesario para dos personas: cama matrimonial, baño privado, cocina equipada, calefacción, WiFi, y zona de estar. Es exclusiva para parejas.',
+        keywords: ['servicios', 'amenities', 'incluye', 'cuenta', 'tiene', 'equipada']
+    },
+    'comida|proveeduria|almacen|supermercado|comer': {
+        response: '🍽️ NO hay proveeduría en el lugar. Cada uno debe traer su propia comida y todo lo que vaya a necesitar durante su estadía. La cabaña tiene cocina totalmente equipada para que prepares tus comidas.',
+        keywords: ['comida', 'proveeduria', 'almacen', 'supermercado', 'comer', 'cocina']
+    },
+    'reserva|reservar|disponibilidad|fechas': {
+        response: '📅 Puedes reservar completando el formulario en la sección "Reservas" o contactándonos directamente por WhatsApp al 221 5047962. La estadía mínima es de 1 noche.',
+        keywords: ['reserva', 'reservar', 'disponibilidad', 'fechas', 'libro']
+    },
+    'mascotas|perro|gato|animales': {
+        response: '🐾 Para consultas sobre mascotas, te recomendamos contactarnos directamente por WhatsApp al 221 5047962. Así podemos darte información específica.',
+        keywords: ['mascotas', 'perro', 'gato', 'animales', 'mascota']
+    },
+    'pareja|parejas|solo|exclusivo': {
+        response: '💑 La Escondida es un refugio exclusivo SOLO para parejas. Es un lugar íntimo pensado para que se pierdan sin horarios, sin miradas ajenas, sin interrupciones.',
+        keywords: ['pareja', 'parejas', 'solo', 'exclusivo', 'dos']
+    },
+    'seguridad|seguro|aislado|privado': {
+        response: '🔒 El lugar es súper seguro y completamente aislado de todo. Están solos en la isla, con total privacidad. Es un ambiente natural privilegiado donde nadie los encuentra.',
+        keywords: ['seguridad', 'seguro', 'aislado', 'privado', 'segura']
+    },
+    'contacto|telefono|whatsapp|comunicar': {
+        response: '📱 Puedes contactarnos por WhatsApp al 221 5047962. ¡Te respondemos al instante! También puedes completar el formulario de reserva en nuestra página.',
+        keywords: ['contacto', 'telefono', 'whatsapp', 'comunicar', 'numero']
+    },
+    'naturaleza|patos|fauna|silvestre': {
+        response: '🦆 Están rodeados de vida silvestre con patos caminando libres en la isla, silencio real y noches que se sienten distintas. Es un refugio en plena naturaleza.',
+        keywords: ['naturaleza', 'patos', 'fauna', 'silvestre', 'animales']
+    }
+};
+
+// Toggle chatbot
+aiChatButton.addEventListener('click', () => {
+    chatbotContainer.classList.add('active');
+    aiChatButton.style.display = 'none';
+    
+    // Mostrar mensaje inicial si está vacío
+    if (chatbotMessages.children.length === 0) {
+        showWelcomeMessage();
+    }
+});
+
+chatbotClose.addEventListener('click', () => {
+    chatbotContainer.classList.remove('active');
+    aiChatButton.style.display = 'flex';
+});
+
+// Función para mostrar mensaje de bienvenida
+function showWelcomeMessage() {
+    const welcomeMessages = [
+        '¡Hola! 👋 Soy el asistente virtual de La Escondida.',
+        '🏡 La cabaña cuenta con todo lo necesario para dos personas durante la estadía.',
+        '⚠️ IMPORTANTE: NO hay proveeduría en el lugar. Cada uno debe traer su propia comida y todo lo que vaya a utilizar.',
+        '🚪 Pueden entrar y salir de la cabaña libremente. Es un lugar súper seguro y aislado de todo.',
+        '💬 ¿En qué puedo ayudarte?'
+    ];
+    
+    welcomeMessages.forEach((msg, index) => {
+        setTimeout(() => {
+            addBotMessage(msg);
+        }, index * 800);
+    });
+}
+
+// Agregar mensaje del bot
+function addBotMessage(message) {
+    const messageDiv = document.createElement('div');
+    messageDiv.className = 'chat-message bot';
+    messageDiv.innerHTML = `
+        <div class="message-avatar">
+            <i class="fas fa-robot"></i>
+        </div>
+        <div class="message-content">${message}</div>
+    `;
+    chatbotMessages.appendChild(messageDiv);
+    chatbotMessages.scrollTop = chatbotMessages.scrollHeight;
+}
+
+// Agregar mensaje del usuario
+function addUserMessage(message) {
+    const messageDiv = document.createElement('div');
+    messageDiv.className = 'chat-message user';
+    messageDiv.innerHTML = `
+        <div class="message-avatar">
+            <i class="fas fa-user"></i>
+        </div>
+        <div class="message-content">${message}</div>
+    `;
+    chatbotMessages.appendChild(messageDiv);
+    chatbotMessages.scrollTop = chatbotMessages.scrollHeight;
+}
+
+// Función para encontrar respuesta
+function findResponse(userMessage) {
+    const normalizedMessage = userMessage.toLowerCase()
+        .normalize("NFD").replace(/[\u0300-\u036f]/g, ""); // Quitar acentos
+    
+    // Buscar coincidencias en la base de conocimiento
+    for (const [pattern, data] of Object.entries(chatbotKnowledge)) {
+        const keywords = pattern.split('|');
+        if (keywords.some(keyword => normalizedMessage.includes(keyword))) {
+            return data.response;
+        }
+    }
+    
+    // Respuesta por defecto
+    return '🤔 No estoy seguro de cómo responder a eso. Te recomiendo contactarnos directamente por WhatsApp al 221 5047962 para obtener información más específica. ¿Hay algo más en lo que pueda ayudarte?';
+}
+
+// Procesar mensaje del usuario
+function processUserMessage() {
+    const message = chatbotInput.value.trim();
+    
+    if (message === '') return;
+    
+    // Agregar mensaje del usuario
+    addUserMessage(message);
+    chatbotInput.value = '';
+    
+    // Track evento
+    trackEvent('chatbot_interaction', { message: message });
+    
+    // Simular "escribiendo..."
+    setTimeout(() => {
+        const response = findResponse(message);
+        addBotMessage(response);
+    }, 800);
+}
+
+// Event listeners
+chatbotSend.addEventListener('click', processUserMessage);
+
+chatbotInput.addEventListener('keypress', (e) => {
+    if (e.key === 'Enter') {
+        processUserMessage();
+    }
 });

@@ -379,6 +379,31 @@
         <i class="fas fa-arrow-up"></i>
     </button>
 
+    <!-- Chatbot IA -->
+    <button class="ai-chat-button" id="aiChatButton">
+        <i class="fas fa-robot"></i>
+        <span>IA</span>
+    </button>
+
+    <div class="chatbot-container" id="chatbotContainer">
+        <div class="chatbot-header">
+            <div>
+                <i class="fas fa-robot"></i>
+                <span>Asistente Virtual</span>
+            </div>
+            <button class="chatbot-close" id="chatbotClose">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+        <div class="chatbot-messages" id="chatbotMessages">
+            <!-- Mensajes se agregan aquí -->
+        </div>
+        <div class="chatbot-input-area">
+            <input type="text" id="chatbotInput" placeholder="Escribe tu pregunta..." />
+            <button id="chatbotSend"><i class="fas fa-paper-plane"></i></button>
+        </div>
+    </div>
+
     <script src="script.js"></script>
 </body>
 </html>
