@@ -742,3 +742,109 @@ promoButtons.forEach(btn => {
         });
     });
 });
+
+// ==================== CARRUSEL DE FOTOS ====================
+const carouselTrack = document.getElementById('carouselTrack');
+const carouselSlides = document.querySelectorAll('.carousel-slide');
+const prevBtn = document.getElementById('carouselPrev');
+const nextBtn = document.getElementById('carouselNext');
+const indicators = document.querySelectorAll('.indicator');
+
+let currentSlide = 0;
+const totalSlides = carouselSlides.length;
+let autoPlayInterval;
+
+// Función para mover al slide específico
+function goToSlide(slideIndex) {
+    currentSlide = slideIndex;
+    
+    // Asegurar que el índice esté dentro del rango
+    if (currentSlide < 0) currentSlide = totalSlides - 1;
+    if (currentSlide >= totalSlides) currentSlide = 0;
+    
+    // Mover el track
+    const moveAmount = -currentSlide * 100;
+    carouselTrack.style.transform = `translateX(${moveAmount}%)`;
+    
+    // Actualizar indicadores
+    indicators.forEach((indicator, index) => {
+        indicator.classList.toggle('active', index === currentSlide);
+    });
+}
+
+// Botón anterior
+prevBtn.addEventListener('click', () => {
+    goToSlide(currentSlide - 1);
+    resetAutoPlay();
+    trackEvent('carousel_navigation', { action: 'prev', slide: currentSlide });
+});
+
+// Botón siguiente
+nextBtn.addEventListener('click', () => {
+    goToSlide(currentSlide + 1);
+    resetAutoPlay();
+    trackEvent('carousel_navigation', { action: 'next', slide: currentSlide });
+});
+
+// Indicadores
+indicators.forEach((indicator, index) => {
+    indicator.addEventListener('click', () => {
+        goToSlide(index);
+        resetAutoPlay();
+        trackEvent('carousel_navigation', { action: 'indicator', slide: index });
+    });
+});
+
+// Auto-play cada 2 segundos
+function startAutoPlay() {
+    autoPlayInterval = setInterval(() => {
+        goToSlide(currentSlide + 1);
+    }, 2000); // 2 segundos
+}
+
+// Reiniciar auto-play
+function resetAutoPlay() {
+    clearInterval(autoPlayInterval);
+    startAutoPlay();
+}
+
+// Pausar auto-play cuando el mouse está sobre el carrusel
+const carouselContainer = document.querySelector('.carousel-container');
+if (carouselContainer) {
+    carouselContainer.addEventListener('mouseenter', () => {
+        clearInterval(autoPlayInterval);
+    });
+
+    carouselContainer.addEventListener('mouseleave', () => {
+        startAutoPlay();
+    });
+}
+
+// Iniciar auto-play
+startAutoPlay();
+
+// Soporte para swipe en móviles
+let touchStartX = 0;
+let touchEndX = 0;
+
+carouselContainer.addEventListener('touchstart', (e) => {
+    touchStartX = e.changedTouches[0].screenX;
+});
+
+carouselContainer.addEventListener('touchend', (e) => {
+    touchEndX = e.changedTouches[0].screenX;
+    handleSwipe();
+});
+
+function handleSwipe() {
+    if (touchEndX < touchStartX - 50) {
+        // Swipe left
+        goToSlide(currentSlide + 1);
+        resetAutoPlay();
+    }
+    if (touchEndX > touchStartX + 50) {
+        // Swipe right
+        goToSlide(currentSlide - 1);
+        resetAutoPlay();
+    }
+}
