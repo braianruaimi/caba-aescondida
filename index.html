@@ -289,10 +289,19 @@
                             </a>
                         </div>
                         <hr style="margin: 2rem 0;">
+                        <div class="promo-box">
+                            <i class="fas fa-star" style="color: #FFD700; font-size: 2rem; margin-bottom: 0.5rem;"></i>
+                            <h4 style="color: var(--primary-color); margin-bottom: 0.8rem;">¡Promoción Especial!</h4>
+                            <p style="margin-bottom: 1rem; font-size: 1.05rem;">Dos noches a un precio exclusivo</p>
+                            <a href="https://wa.me/5492215047962?text=Hola%21%20Quiero%20saber%20disponibilidad%20para%20dos%20noches%21" target="_blank" class="btn-promo">
+                                <i class="fab fa-whatsapp"></i> Consultar Promoción
+                            </a>
+                        </div>
+                        <hr style="margin: 2rem 0;">
                         <h3>Información</h3>
                         <div class="info-item">
                             <i class="fas fa-moon"></i>
-                            <span>Estadía mínima: 2 noches</span>
+                            <span>Estadía mínima: 1 noche</span>
                         </div>
                         <div class="info-item">
                             <i class="fas fa-heart"></i>
@@ -401,6 +410,21 @@
         <div class="chatbot-input-area">
             <input type="text" id="chatbotInput" placeholder="Escribe tu pregunta..." />
             <button id="chatbotSend"><i class="fas fa-paper-plane"></i></button>
+        </div>
+    </div>
+
+    <!-- Popup Promocional -->
+    <div class="promo-popup" id="promoPopup">
+        <button class="promo-close" id="promoClose">
+            <i class="fas fa-times"></i>
+        </button>
+        <div class="promo-content">
+            <i class="fas fa-star" style="color: #FFD700; font-size: 3rem; margin-bottom: 1rem;"></i>
+            <h3>¡Aprovechá nuestra promoción!</h3>
+            <p>Dos noches a un precio exclusivo</p>
+            <a href="https://wa.me/5492215047962?text=Hola%21%20Quiero%20saber%20disponibilidad%20para%20dos%20noches%21" target="_blank" class="btn-promo-popup">
+                <i class="fab fa-whatsapp"></i> Reservar Ahora
+            </a>
         </div>
     </div>
 

@@ -700,3 +700,45 @@ chatbotInput.addEventListener('keypress', (e) => {
         processUserMessage();
     }
 });
+
+// ==================== POPUP PROMOCIONAL ====================
+const promoPopup = document.getElementById('promoPopup');
+const promoClose = document.getElementById('promoClose');
+
+// Mostrar popup después de 15 segundos
+let promoShown = sessionStorage.getItem('promo_shown');
+
+if (!promoShown) {
+    setTimeout(() => {
+        promoPopup.classList.add('active');
+        trackEvent('promo_popup_shown', { timestamp: new Date().toISOString() });
+        
+        // Marcar como mostrado para no repetir en esta sesión
+        sessionStorage.setItem('promo_shown', 'true');
+    }, 15000); // 15 segundos
+}
+
+// Cerrar popup
+promoClose.addEventListener('click', () => {
+    promoPopup.classList.remove('active');
+    trackEvent('promo_popup_closed', { action: 'close_button' });
+});
+
+// Cerrar al hacer clic fuera del contenido
+promoPopup.addEventListener('click', (e) => {
+    if (e.target === promoPopup) {
+        promoPopup.classList.remove('active');
+        trackEvent('promo_popup_closed', { action: 'outside_click' });
+    }
+});
+
+// Track click en botón de promoción
+const promoButtons = document.querySelectorAll('.btn-promo-popup, .btn-promo');
+promoButtons.forEach(btn => {
+    btn.addEventListener('click', () => {
+        trackEvent('promo_conversion', { 
+            source: btn.classList.contains('btn-promo-popup') ? 'popup' : 'form',
+            timestamp: new Date().toISOString()
+        });
+    });
+});
