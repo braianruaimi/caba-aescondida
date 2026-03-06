@@ -213,6 +213,72 @@ checkinInput.addEventListener('change', () => {
     }
 });
 
+// Botón "Chatea con Nosotros" - Envía datos del formulario si están completos
+const chatDirectBtn = document.getElementById('chatDirectBtn');
+
+chatDirectBtn.addEventListener('click', () => {
+    const numeroWhatsApp = '5492215047962';
+    
+    // Obtener valores del formulario
+    const nombre = document.getElementById('nombre').value.trim();
+    const email = document.getElementById('email').value.trim();
+    const telefono = document.getElementById('telefono').value.trim();
+    const checkin = document.getElementById('checkin').value;
+    const checkout = document.getElementById('checkout').value;
+    const mensajeTexto = document.getElementById('mensaje').value.trim();
+    
+    // Si hay datos en el formulario, enviarlos
+    if (nombre || email || telefono || checkin || checkout || mensajeTexto) {
+        // Formatear fechas si existen
+        const formatDate = (dateStr) => {
+            if (!dateStr) return '';
+            const date = new Date(dateStr);
+            const day = String(date.getDate() + 1).padStart(2, '0');
+            const month = String(date.getMonth() + 1).padStart(2, '0');
+            const year = date.getFullYear();
+            return `${day}/${month}/${year}`;
+        };
+        
+        // Calcular noches si hay ambas fechas
+        let nightsText = '';
+        if (checkin && checkout) {
+            const checkinDate = new Date(checkin);
+            const checkoutDate = new Date(checkout);
+            const nights = Math.ceil((checkoutDate - checkinDate) / (1000 * 60 * 60 * 24));
+            if (nights > 0) {
+                nightsText = `🌙 *Noches:* ${nights}%0A%0A`;
+            }
+        }
+        
+        // Crear mensaje con los datos disponibles
+        let mensaje = `🏡 *CONSULTA - LA ESCONDIDA*%0A%0A`;
+        
+        if (nombre) mensaje += `👤 *Nombre:* ${nombre}%0A`;
+        if (email) mensaje += `📧 *Email:* ${email}%0A`;
+        if (telefono) mensaje += `📱 *Teléfono:* ${telefono}%0A`;
+        if (nombre || email || telefono) mensaje += `%0A`;
+        
+        if (checkin) mensaje += `📅 *Check-in:* ${formatDate(checkin)}%0A`;
+        if (checkout) mensaje += `📅 *Check-out:* ${formatDate(checkout)}%0A`;
+        if (checkin || checkout) mensaje += nightsText;
+        
+        if (mensajeTexto) mensaje += `💬 *Mensaje:*%0A${encodeURIComponent(mensajeTexto)}%0A%0A`;
+        
+        mensaje += `_Consulta enviada desde la web de La Escondida_`;
+        
+        // Abrir WhatsApp con el mensaje
+        window.open(`https://wa.me/${numeroWhatsApp}?text=${mensaje}`, '_blank');
+        
+        // Limpiar formulario después de 2 segundos
+        setTimeout(() => {
+            bookingForm.reset();
+        }, 2000);
+    } else {
+        // Si no hay datos, abrir WhatsApp sin mensaje pre-cargado
+        window.open(`https://wa.me/${numeroWhatsApp}`, '_blank');
+    }
+});
+
 // Sistema de notificaciones
 function showNotification(message, type = 'info') {
     // Crear elemento de notificación
