@@ -1,0 +1,449 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard CEO - La Escondida</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            color: #fff;
+            min-height: 100vh;
+            padding: 2rem;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 3rem;
+            padding-bottom: 1rem;
+            border-bottom: 2px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .header h1 {
+            font-size: 2rem;
+            color: #f4a261;
+        }
+
+        .header .subtitle {
+            color: rgba(255, 255, 255, 0.6);
+            font-size: 1rem;
+        }
+
+        .back-btn {
+            padding: 0.8rem 1.5rem;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 8px;
+            color: #fff;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: all 0.3s ease;
+        }
+
+        .back-btn:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateY(-2px);
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 3rem;
+        }
+
+        .stat-card {
+            background: linear-gradient(135deg, rgba(244, 162, 97, 0.1), rgba(233, 196, 106, 0.1));
+            border: 1px solid rgba(244, 162, 97, 0.2);
+            border-radius: 12px;
+            padding: 2rem;
+            backdrop-filter: blur(10px);
+            transition: transform 0.3s ease;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .stat-card .icon {
+            width: 60px;
+            height: 60px;
+            background: rgba(244, 162, 97, 0.2);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.8rem;
+            color: #f4a261;
+            margin-bottom: 1rem;
+        }
+
+        .stat-card h3 {
+            font-size: 0.9rem;
+            color: rgba(255, 255, 255, 0.7);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-card .value {
+            font-size: 2.5rem;
+            font-weight: bold;
+            color: #f4a261;
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-card .change {
+            font-size: 0.9rem;
+            color: #4ecdc4;
+        }
+
+        .chart-section {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .chart-section h2 {
+            font-size: 1.5rem;
+            margin-bottom: 1.5rem;
+            color: #f4a261;
+        }
+
+        .activity-list {
+            max-height: 400px;
+            overflow-y: auto;
+        }
+
+        .activity-item {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 1rem;
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 8px;
+            margin-bottom: 0.8rem;
+            border-left: 3px solid #f4a261;
+        }
+
+        .activity-item .activity-icon {
+            width: 40px;
+            height: 40px;
+            background: rgba(244, 162, 97, 0.2);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #f4a261;
+        }
+
+        .activity-item .activity-content {
+            flex: 1;
+        }
+
+        .activity-item .activity-title {
+            font-weight: 600;
+            margin-bottom: 0.3rem;
+        }
+
+        .activity-item .activity-time {
+            font-size: 0.8rem;
+            color: rgba(255, 255, 255, 0.5);
+        }
+
+        .actions {
+            display: flex;
+            gap: 1rem;
+            margin-top: 2rem;
+        }
+
+        .action-btn {
+            padding: 1rem 2rem;
+            background: rgba(244, 162, 97, 0.2);
+            border: 1px solid rgba(244, 162, 97, 0.3);
+            border-radius: 8px;
+            color: #fff;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .action-btn:hover {
+            background: rgba(244, 162, 97, 0.3);
+            transform: translateY(-2px);
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 8px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 4px;
+            overflow: hidden;
+            margin-top: 0.5rem;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #f4a261, #e9c46a);
+            border-radius: 4px;
+            transition: width 0.3s ease;
+        }
+
+        @media (max-width: 768px) {
+            body {
+                padding: 1rem;
+            }
+
+            .header {
+                flex-direction: column;
+                gap: 1rem;
+                text-align: center;
+            }
+
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .actions {
+                flex-direction: column;
+            }
+        }
+
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: rgba(255, 255, 255, 0.05);
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: rgba(244, 162, 97, 0.5);
+            border-radius: 4px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div>
+                <h1><i class="fas fa-chart-line"></i> Dashboard CEO</h1>
+                <p class="subtitle">Panel de métricas - La Escondida</p>
+            </div>
+            <a href="index.html" class="back-btn">
+                <i class="fas fa-arrow-left"></i> Volver al sitio
+            </a>
+        </div>
+
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="icon"><i class="fas fa-eye"></i></div>
+                <h3>Visitas Totales</h3>
+                <div class="value" id="totalViews">0</div>
+                <div class="change">↑ Últimas 24 horas</div>
+            </div>
+
+            <div class="stat-card">
+                <div class="icon"><i class="fas fa-mouse-pointer"></i></div>
+                <h3>Clicks Totales</h3>
+                <div class="value" id="totalClicks">0</div>
+                <div class="change">Interacciones del usuario</div>
+            </div>
+
+            <div class="stat-card">
+                <div class="icon"><i class="fab fa-whatsapp"></i></div>
+                <h3>Conversiones WhatsApp</h3>
+                <div class="value" id="totalConversions">0</div>
+                <div class="change" id="conversionRate">0% tasa de conversión</div>
+                <div class="progress-bar">
+                    <div class="progress-fill" id="conversionProgress" style="width: 0%"></div>
+                </div>
+            </div>
+
+            <div class="stat-card">
+                <div class="icon"><i class="fas fa-clock"></i></div>
+                <h3>Tiempo Promedio</h3>
+                <div class="value" id="avgTime">0s</div>
+                <div class="change">Tiempo en el sitio</div>
+            </div>
+        </div>
+
+        <div class="chart-section">
+            <h2><i class="fas fa-chart-bar"></i> Actividad Reciente</h2>
+            <div class="activity-list" id="activityList">
+                <!-- Se llena dinámicamente -->
+            </div>
+        </div>
+
+        <div class="actions">
+            <button class="action-btn" onclick="exportData()">
+                <i class="fas fa-download"></i> Exportar Datos
+            </button>
+            <button class="action-btn" onclick="clearData()">
+                <i class="fas fa-trash"></i> Limpiar Datos
+            </button>
+            <button class="action-btn" onclick="refreshData()">
+                <i class="fas fa-sync"></i> Actualizar
+            </button>
+        </div>
+    </div>
+
+    <script>
+        // Verificar autenticación
+        function checkAuth() {
+            const authTime = sessionStorage.getItem('admin_auth_time');
+            const now = Date.now();
+            
+            if (!authTime || (now - parseInt(authTime)) > 3600000) { // 1 hora
+                const password = prompt('Ingrese la contraseña de administrador:');
+                if (password === '1234') {
+                    sessionStorage.setItem('admin_auth_time', now.toString());
+                } else {
+                    alert('Acceso denegado');
+                    window.location.href = 'index.html';
+                }
+            }
+        }
+
+        checkAuth();
+
+        // Cargar datos de analytics
+        function loadAnalytics() {
+            const events = JSON.parse(localStorage.getItem('cabana_analytics') || '[]');
+            
+            // Calcular métricas
+            const pageViews = events.filter(e => e.type === 'page_view').length;
+            const buttonClicks = events.filter(e => e.type === 'button_click').length;
+            const conversions = events.filter(e => e.type === 'conversion').length;
+            const timeEvents = events.filter(e => e.type === 'time_on_page');
+            
+            // Tiempo promedio
+            let avgTime = 0;
+            if (timeEvents.length > 0) {
+                const totalTime = timeEvents.reduce((sum, e) => sum + (e.seconds || 0), 0);
+                avgTime = Math.round(totalTime / timeEvents.length);
+            }
+            
+            // Actualizar UI
+            document.getElementById('totalViews').textContent = pageViews;
+            document.getElementById('totalClicks').textContent = buttonClicks;
+            document.getElementById('totalConversions').textContent = conversions;
+            document.getElementById('avgTime').textContent = `${avgTime}s`;
+            
+            // Tasa de conversión
+            const conversionRate = pageViews > 0 ? ((conversions / pageViews) * 100).toFixed(1) : 0;
+            document.getElementById('conversionRate').textContent = `${conversionRate}% tasa de conversión`;
+            document.getElementById('conversionProgress').style.width = `${Math.min(conversionRate * 2, 100)}%`;
+            
+            // Actividad reciente
+            const activityList = document.getElementById('activityList');
+            activityList.innerHTML = '';
+            
+            // Últimos 50 eventos
+            const recentEvents = events.slice(-50).reverse();
+            
+            if (recentEvents.length === 0) {
+                activityList.innerHTML = '<p style="text-align: center; color: rgba(255,255,255,0.5); padding: 2rem;">No hay actividad registrada aún</p>';
+            } else {
+                recentEvents.forEach(event => {
+                    const item = document.createElement('div');
+                    item.className = 'activity-item';
+                    
+                    let icon, title, subtitle;
+                    
+                    switch(event.type) {
+                        case 'page_view':
+                            icon = 'fa-eye';
+                            title = 'Vista de página';
+                            subtitle = event.page || 'Página principal';
+                            break;
+                        case 'button_click':
+                            icon = 'fa-mouse-pointer';
+                            title = 'Click en botón';
+                            subtitle = event.text || 'Botón';
+                            break;
+                        case 'conversion':
+                            icon = 'fa-whatsapp';
+                            title = 'Conversión - Click en WhatsApp';
+                            subtitle = event.text || 'WhatsApp';
+                            break;
+                        case 'dashboard_access':
+                            icon = 'fa-shield-alt';
+                            title = 'Acceso al dashboard';
+                            subtitle = 'Panel de administración';
+                            break;
+                        default:
+                            icon = 'fa-circle';
+                            title = event.type;
+                            subtitle = '';
+                    }
+                    
+                    const time = new Date(event.timestamp).toLocaleString('es-AR');
+                    
+                    item.innerHTML = `
+                        <div class="activity-icon">
+                            <i class="fas ${icon}"></i>
+                        </div>
+                        <div class="activity-content">
+                            <div class="activity-title">${title}</div>
+                            <div class="activity-time">${time} - ${subtitle}</div>
+                        </div>
+                    `;
+                    
+                    activityList.appendChild(item);
+                });
+            }
+        }
+
+        function exportData() {
+            const events = localStorage.getItem('cabana_analytics') || '[]';
+            const blob = new Blob([events], { type: 'application/json' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `analytics_${new Date().toISOString().split('T')[0]}.json`;
+            a.click();
+            URL.revokeObjectURL(url);
+        }
+
+        function clearData() {
+            if (confirm('¿Está seguro de que desea eliminar todos los datos de analytics?')) {
+                localStorage.removeItem('cabana_analytics');
+                loadAnalytics();
+                alert('Datos eliminados correctamente');
+            }
+        }
+
+        function refreshData() {
+            loadAnalytics();
+        }
+
+        // Cargar datos al inicio
+        loadAnalytics();
+
+        // Auto-refresh cada 30 segundos
+        setInterval(loadAnalytics, 30000);
+    </script>
+</body>
+</html>

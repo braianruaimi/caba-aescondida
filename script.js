@@ -472,3 +472,68 @@ document.querySelectorAll('[data-tooltip]').forEach(element => {
 // Para debugging (puedes comentar en producción)
 console.log('🏡 Cabaña Escondida - Website cargado correctamente');
 console.log('📧 Para consultas: info@cabanaescondida.com');
+
+// Admin Panel Access
+const adminDot = document.getElementById('adminAccess');
+if (adminDot) {
+    adminDot.addEventListener('click', () => {
+        const password = prompt('Ingrese la contraseña de administrador:');
+        if (password === '1234') {
+            // Registrar acceso al dashboard
+            trackEvent('dashboard_access', { timestamp: new Date().toISOString() });
+            window.location.href = 'dashboard.html';
+        } else if (password !== null) {
+            alert('Contraseña incorrecta');
+        }
+    });
+}
+
+// Analytics tracking - Almacenamiento local
+function trackEvent(eventType, data = {}) {
+    const events = JSON.parse(localStorage.getItem('cabana_analytics') || '[]');
+    events.push({
+        type: eventType,
+        timestamp: new Date().toISOString(),
+        ...data
+    });
+    localStorage.setItem('cabana_analytics', JSON.stringify(events));
+}
+
+// Track page views
+trackEvent('page_view', { 
+    page: window.location.pathname,
+    referrer: document.referrer 
+});
+
+// Track clicks en elementos importantes
+document.addEventListener('click', (e) => {
+    const target = e.target.closest('a, button');
+    if (target) {
+        const href = target.getAttribute('href');
+        const text = target.textContent.trim();
+        
+        // Track clicks en botones de WhatsApp como conversiones
+        if (href && href.includes('wa.me')) {
+            trackEvent('conversion', { 
+                type: 'whatsapp_click',
+                text: text,
+                url: href
+            });
+        } else if (target.classList.contains('btn')) {
+            trackEvent('button_click', { 
+                text: text,
+                classes: target.className
+            });
+        }
+    }
+});
+
+// Track tiempo en página
+let timeOnPage = 0;
+setInterval(() => {
+    timeOnPage += 5;
+}, 5000);
+
+window.addEventListener('beforeunload', () => {
+    trackEvent('time_on_page', { seconds: timeOnPage });
+});
