@@ -4,7 +4,7 @@ Sitio web oficial de Cabaña Escondida - Tu refugio perfecto en la naturaleza.
 
 ## 📋 Descripción
 
-Este es el sitio web de presentación y reservas para Cabaña Escondida, un alojamiento turístico ubicado en un entorno natural privilegiado. El sitio ofrece información completa sobre la cabaña, servicios, galería de imágenes, ubicación y un sistema de consulta de reservas.
+Este es el sitio web de presentación y reservas para Cabaña Escondida, un refugio turístico ubicado en un entorno natural privilegiado. El sitio ofrece información completa sobre la cabaña, servicios, galería de imágenes, ubicación y un sistema de consulta de reservas. La experiencia está pensada exclusivamente para dos personas, no se aceptan niños ni mascotas.
 
 ## ✨ Características
 
@@ -13,6 +13,7 @@ Este es el sitio web de presentación y reservas para Cabaña Escondida, un aloj
 - **Galería de Imágenes**: Visualización interactiva de los espacios
 - **Sistema de Reservas**: Formulario de consulta con validación
 - **Integración WhatsApp**: Envío directo de consultas
+- **Chatbot Informativo**: Responde dudas frecuentes sobre el refugio y sus condiciones
 - **Animaciones**: Efectos visuales atractivos al hacer scroll
 - **Optimizado para SEO**: Meta tags y estructura semántica
 
@@ -94,6 +95,12 @@ const numeroWhatsApp = '5492216748740'; // Tu número aquí
 5. **Ubicación**: Mapa e indicaciones de cómo llegar
 6. **Reservas**: Formulario de consulta con tarifas
 7. **Contacto**: Información de contacto y redes sociales
+
+## 🏡 Condiciones del Refugio
+
+- **Diseñado para dos personas**: La experiencia completa del refugio está pensada para una estadía de pareja con todas las comodidades.
+- **No se aceptan niños**: El alojamiento no está preparado para estadías con menores.
+- **No se aceptan mascotas**: La propuesta del refugio no admite ingreso de animales.
 
 ## 🎨 Personalización de Contenido
 

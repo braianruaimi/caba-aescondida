@@ -561,7 +561,7 @@ const chatbotKnowledge = {
         keywords: ['horario', 'check-in', 'check-out', 'entrada', 'salida', 'hora']
     },
     'servicios|amenities|incluye|cuenta|tiene': {
-        response: '🏡 La cabaña cuenta con todo lo necesario para dos personas: cama matrimonial, baño privado, cocina equipada, calefacción, WiFi, y zona de estar. Es exclusiva para parejas.',
+        response: '🏡 La cabaña cuenta con todo lo necesario para dos personas: cama matrimonial, baño privado, cocina equipada, calefacción, WiFi y zona de estar. El refugio está totalmente pensado y diseñado para que dos personas disfruten de la estadía con todas las comodidades.',
         keywords: ['servicios', 'amenities', 'incluye', 'cuenta', 'tiene', 'equipada']
     },
     'comida|proveeduria|almacen|supermercado|comer': {
@@ -573,11 +573,15 @@ const chatbotKnowledge = {
         keywords: ['reserva', 'reservar', 'disponibilidad', 'fechas', 'libro']
     },
     'mascotas|perro|gato|animales': {
-        response: '🐾 Para consultas sobre mascotas, te recomendamos contactarnos directamente por WhatsApp al 221 6748740. Así podemos darte información específica.',
+        response: '🐾 No se aceptan mascotas en La Escondida. El refugio está pensado exclusivamente para que dos personas disfruten la estadía con total comodidad y privacidad.',
         keywords: ['mascotas', 'perro', 'gato', 'animales', 'mascota']
     },
+    'niños|ninos|chicos|bebes|bebe|menores|familia': {
+        response: '🚫 No se aceptan niños en La Escondida. El refugio está totalmente pensado y diseñado para que dos personas disfruten de la estadía con todas las comodidades.',
+        keywords: ['niños', 'ninos', 'chicos', 'bebes', 'bebe', 'menores', 'familia']
+    },
     'pareja|parejas|solo|exclusivo': {
-        response: '💑 La Escondida es un refugio exclusivo SOLO para parejas. Es un lugar íntimo pensado para que se pierdan sin horarios, sin miradas ajenas, sin interrupciones.',
+        response: '💑 La Escondida es un refugio exclusivo solo para parejas. Está totalmente pensado y diseñado para que dos personas disfruten de la estadía con todas las comodidades, sin interrupciones ni miradas ajenas.',
         keywords: ['pareja', 'parejas', 'solo', 'exclusivo', 'dos']
     },
     'seguridad|seguro|aislado|privado': {
@@ -614,7 +618,8 @@ chatbotClose.addEventListener('click', () => {
 function showWelcomeMessage() {
     const welcomeMessages = [
         '¡Hola! 👋 Soy el asistente virtual de La Escondida.',
-        '🏡 La cabaña cuenta con todo lo necesario para dos personas durante la estadía.',
+        '🏡 La cabaña está totalmente pensada y diseñada para que dos personas disfruten de la estadía con todas las comodidades.',
+        '🚫 No se aceptan niños ni mascotas.',
         '⚠️ IMPORTANTE: NO hay proveeduría en el lugar. Cada uno debe traer su propia comida y todo lo que vaya a utilizar.',
         '🚪 Pueden entrar y salir de la cabaña libremente. Es un lugar súper seguro y aislado de todo.',
         '💬 ¿En qué puedo ayudarte?'
