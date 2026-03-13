@@ -73,7 +73,7 @@ No se requiere instalación de dependencias ni servidor local, aunque se recomie
 
 3. **WhatsApp**: Cambia el número en `script.js`:
 ```javascript
-const numeroWhatsApp = '5491112345678'; // Tu número aquí
+const numeroWhatsApp = '5492216748740'; // Tu número aquí
 ```
 
 4. **Imágenes**: Reemplaza las URLs de Unsplash con tus propias imágenes:

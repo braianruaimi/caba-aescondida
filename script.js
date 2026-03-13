@@ -177,7 +177,7 @@ bookingForm.addEventListener('submit', (e) => {
                    `_Consulta enviada desde la web de La Escondida_`;
     
     // Reemplaza con tu número de WhatsApp (sin +, sin espacios, sin guiones)
-    const numeroWhatsApp = '5492215047962';
+    const numeroWhatsApp = '5492216748740';
     
     // Abrir WhatsApp
     window.open(`https://wa.me/${numeroWhatsApp}?text=${mensaje}`, '_blank');
@@ -217,7 +217,7 @@ checkinInput.addEventListener('change', () => {
 const chatDirectBtn = document.getElementById('chatDirectBtn');
 
 chatDirectBtn.addEventListener('click', () => {
-    const numeroWhatsApp = '5492215047962';
+    const numeroWhatsApp = '5492216748740';
     
     // Obtener valores del formulario
     const nombre = document.getElementById('nombre').value.trim();
@@ -553,7 +553,7 @@ const chatbotKnowledge = {
         keywords: ['ubicacion', 'donde', 'lugar', 'arana', 'ubicada', 'está']
     },
     'precio|costo|tarifa|cuanto': {
-        response: '💰 Para consultar precios y disponibilidad, te recomiendo contactarnos directamente por WhatsApp haciendo clic en el botón "Reservar Ahora" o escribiéndonos al 221 5047962.',
+        response: '💰 Para consultar precios y disponibilidad, te recomiendo contactarnos directamente por WhatsApp haciendo clic en el botón "Reservar Ahora" o escribiéndonos al 221 6748740.',
         keywords: ['precio', 'costo', 'tarifa', 'cuanto', 'vale']
     },
     'horario|check-in|check-out|entrada|salida': {
@@ -569,11 +569,11 @@ const chatbotKnowledge = {
         keywords: ['comida', 'proveeduria', 'almacen', 'supermercado', 'comer', 'cocina']
     },
     'reserva|reservar|disponibilidad|fechas': {
-        response: '📅 Puedes reservar completando el formulario en la sección "Reservas" o contactándonos directamente por WhatsApp al 221 5047962. La estadía mínima es de 1 noche.',
+        response: '📅 Puedes reservar completando el formulario en la sección "Reservas" o contactándonos directamente por WhatsApp al 221 6748740. La estadía mínima es de 1 noche.',
         keywords: ['reserva', 'reservar', 'disponibilidad', 'fechas', 'libro']
     },
     'mascotas|perro|gato|animales': {
-        response: '🐾 Para consultas sobre mascotas, te recomendamos contactarnos directamente por WhatsApp al 221 5047962. Así podemos darte información específica.',
+        response: '🐾 Para consultas sobre mascotas, te recomendamos contactarnos directamente por WhatsApp al 221 6748740. Así podemos darte información específica.',
         keywords: ['mascotas', 'perro', 'gato', 'animales', 'mascota']
     },
     'pareja|parejas|solo|exclusivo': {
@@ -585,7 +585,7 @@ const chatbotKnowledge = {
         keywords: ['seguridad', 'seguro', 'aislado', 'privado', 'segura']
     },
     'contacto|telefono|whatsapp|comunicar': {
-        response: '📱 Puedes contactarnos por WhatsApp al 221 5047962. ¡Te respondemos al instante! También puedes completar el formulario de reserva en nuestra página.',
+        response: '📱 Puedes contactarnos por WhatsApp al 221 6748740. ¡Te respondemos al instante! También puedes completar el formulario de reserva en nuestra página.',
         keywords: ['contacto', 'telefono', 'whatsapp', 'comunicar', 'numero']
     },
     'naturaleza|patos|fauna|silvestre': {
@@ -669,7 +669,7 @@ function findResponse(userMessage) {
     }
     
     // Respuesta por defecto
-    return '🤔 No estoy seguro de cómo responder a eso. Te recomiendo contactarnos directamente por WhatsApp al 221 5047962 para obtener información más específica. ¿Hay algo más en lo que pueda ayudarte?';
+    return '🤔 No estoy seguro de cómo responder a eso. Te recomiendo contactarnos directamente por WhatsApp al 221 6748740 para obtener información más específica. ¿Hay algo más en lo que pueda ayudarte?';
 }
 
 // Procesar mensaje del usuario
@@ -854,18 +854,96 @@ function handleSwipe() {
 // ===========================
 
 let deferredPrompt;
+let refreshingApp = false;
 const installButton = document.getElementById('installAppButton');
+const updateButton = document.getElementById('updateAppButton');
+
+function showInstallButton() {
+    if (installButton) {
+        installButton.style.display = 'flex';
+    }
+}
+
+function hideInstallButton() {
+    if (installButton) {
+        installButton.style.display = 'none';
+    }
+}
+
+function hideUpdateButton() {
+    if (updateButton) {
+        updateButton.style.display = 'none';
+        updateButton.onclick = null;
+    }
+}
+
+function showUpdateButton(registration) {
+    if (!updateButton) {
+        return;
+    }
+
+    updateButton.style.display = 'flex';
+    updateButton.onclick = () => {
+        if (!registration || !registration.waiting) {
+            return;
+        }
+
+        const shouldUpdate = window.confirm('Hay una nueva versión disponible. ¿Querés actualizar los cambios ahora?');
+        if (!shouldUpdate) {
+            return;
+        }
+
+        refreshingApp = true;
+        registration.waiting.postMessage({ type: 'SKIP_WAITING' });
+    };
+}
+
+function trackServiceWorkerUpdates(registration) {
+    if (!registration) {
+        return;
+    }
+
+    if (registration.waiting) {
+        showUpdateButton(registration);
+    }
+
+    registration.addEventListener('updatefound', () => {
+        const newWorker = registration.installing;
+        if (!newWorker) {
+            return;
+        }
+
+        newWorker.addEventListener('statechange', () => {
+            if (newWorker.state === 'installed' && navigator.serviceWorker.controller) {
+                showUpdateButton(registration);
+            }
+        });
+    });
+}
 
 // Registrar Service Worker
 if ('serviceWorker' in navigator) {
     window.addEventListener('load', () => {
-        navigator.serviceWorker.register('/sw.js')
+        navigator.serviceWorker.register('sw.js')
             .then(registration => {
                 console.log('Service Worker registrado:', registration);
+                trackServiceWorkerUpdates(registration);
+                registration.update().catch(() => {
+                    console.log('No se pudo comprobar si hay una nueva versión disponible');
+                });
             })
             .catch(error => {
                 console.log('Error al registrar Service Worker:', error);
             });
+    });
+
+    navigator.serviceWorker.addEventListener('controllerchange', () => {
+        if (!refreshingApp) {
+            return;
+        }
+
+        refreshingApp = false;
+        window.location.reload();
     });
 }
 
@@ -876,9 +954,7 @@ window.addEventListener('beforeinstallprompt', (e) => {
     // Guardar el evento para usarlo después
     deferredPrompt = e;
     // Mostrar el botón de instalación
-    if (installButton) {
-        installButton.style.display = 'flex';
-    }
+    showInstallButton();
 });
 
 // Manejar el clic en el botón de instalación
@@ -904,15 +980,14 @@ if (installButton) {
         deferredPrompt = null;
         
         // Ocultar el botón después de intentar instalar
-        installButton.style.display = 'none';
+        hideInstallButton();
     });
 }
 
 // Detectar cuando la app ya está instalada
 window.addEventListener('appinstalled', () => {
     console.log('La aplicación fue instalada');
-    if (installButton) {
-        installButton.style.display = 'none';
-    }
+    hideInstallButton();
+    hideUpdateButton();
     deferredPrompt = null;
 });

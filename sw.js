@@ -1,14 +1,22 @@
 // Service Worker para La Escondida
-const CACHE_NAME = 'la-escondida-v2';
+const CACHE_NAME = 'la-escondida-v3';
 const urlsToCache = [
-  '/',
-  '/index.html',
-  '/styles.css',
-  '/script.js',
-  '/Image/1.jpeg',
-  '/Image/2.jpeg',
-  '/Image/3.jpeg'
+  './',
+  './index.html',
+  './styles.css',
+  './script.js',
+  './manifest.json',
+  './dashboard.html',
+  './Image/1.jpeg',
+  './Image/2.jpeg',
+  './Image/3.jpeg'
 ];
+
+self.addEventListener('message', event => {
+  if (event.data && event.data.type === 'SKIP_WAITING') {
+    self.skipWaiting();
+  }
+});
 
 // Instalación del Service Worker
 self.addEventListener('install', event => {
@@ -32,7 +40,7 @@ self.addEventListener('activate', event => {
           }
         })
       );
-    })
+    }).then(() => self.clients.claim())
   );
 });
 
