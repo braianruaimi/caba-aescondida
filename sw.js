@@ -1,11 +1,14 @@
 // Service Worker para La Escondida
-const CACHE_NAME = 'la-escondida-v3';
+const CACHE_NAME = 'la-escondida-v4';
 const urlsToCache = [
   './',
   './index.html',
   './styles.css',
+  './styles.css?v=20260313-2',
   './script.js',
+  './script.js?v=20260313-2',
   './manifest.json',
+  './manifest.json?v=20260313-2',
   './dashboard.html',
   './Image/1.jpeg',
   './Image/2.jpeg',
